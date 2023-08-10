@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Feed from './Feed'
+import Error from './Error'
 
-const Fetch = () => {
+const Fetch = ( {error}) => {
+
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -11,7 +13,7 @@ const Fetch = () => {
         setArticles(data);
       })
       .catch(error => {
-        console.log("Error fetching articles: " + error);
+        return <Error />
       });
   }, []);
 
