@@ -8,13 +8,14 @@ const App = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
-      .then(response => {
-        setArticles(response.data);
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json())
+      .then(data => {
+        setArticles(data);
       })
       .catch(error => {
-        console.log('Error fetching articles', error);
-      })
+        console.log("Error fetching articles: " + error);
+      });
   }, []);
 
   return (
