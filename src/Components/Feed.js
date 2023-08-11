@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 
-export default function Articles({ articles, photos }) {
+export default function Feed({ articles, photos }) {
   const cardsPerRow = 3;
 
   const rows = [];
@@ -15,36 +15,38 @@ export default function Articles({ articles, photos }) {
     rows.push(row);
   }
 
-  return (
-    <div
+    return (
+      <div
       style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         minHeight: '100vh',
-        padding: '20px', // Add some padding to separate content from edges
+        padding: '20px',
       }}
-    >
+      >
       <h1>News feed</h1>
       {rows.map((row, rowIndex) => (
         <div
-          key={rowIndex}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: '20px',
-          }}
+        key={rowIndex}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginBottom: '20px',
+        }}
         >
-          {row.map((article, columnIndex) => (
+          {row.map((article, columnIndex) => {
+            const photo = photos[columnIndex];
+            return (
             <Card
               key={columnIndex}
               sx={{ maxWidth: 300, width: '100%', marginRight: '20px' }}
             >
               <CardActionArea>
-                <CardMedia 
+                <CardMedia
                   component="img"
                   height="140"
-                  image={photos[columnIndex].url}
+                  image={photo.url}
                   alt="Article Photo"
                   />
                 <CardContent>
@@ -62,7 +64,7 @@ export default function Articles({ articles, photos }) {
                 </Button>
               </CardActions>
             </Card>
-          ))}
+)})}
         </div>
       ))}
     </div>

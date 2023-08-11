@@ -6,39 +6,33 @@ const Fetch = ( {error}) => {
 
   const [articles, setArticles] = useState([]);
   const [photos, setPhotos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => response.json())
-      .then(data => {
-        setArticles(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false)
-        return <Error />
-      });
-
-    fetch('https://jsonplaceholder.typicode.com/photos')
-      .then(response => response.json())
-      .then(data => {
-        setPhotos(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        return <Error />
-      });
+    Promise.all([
+      fetch('https://jsonplaceholder.typicode.com/posts').then(response => response.json()),
+      fetch('https://jsonplaceholder.typicode.com/photos').then(response => response.json())
+    ])
+    .then(([articlesData, photosData]) => {
+      setArticles(articlesData);
+      setPhotos(photosData);
+      setIsLoading(false);
+    })
+    .catch(error => {
+        <Error />
+      setIsLoading(false);
+    });
   }, []);
 
-return (
-  <div>
-  <Feed articles={articles} photos={photos}/>
-  </div>
-)
+  return (
+    <div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Feed articles={articles} photos={photos} />
+      )}
+    </div>
+  )
 }
 
 export default Fetch;
