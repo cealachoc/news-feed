@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 
-export default function Articles({ articles }) {
+export default function Articles({ articles, photos }) {
   const cardsPerRow = 3;
 
   const rows = [];
@@ -41,7 +41,12 @@ export default function Articles({ articles }) {
               sx={{ maxWidth: 300, width: '100%', marginRight: '20px' }}
             >
               <CardActionArea>
-                <CardMedia />
+                <CardMedia 
+                  component="img"
+                  height="140"
+                  image={photos[columnIndex].url}
+                  alt="Article Photo"
+                  />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {article.title}
@@ -63,23 +68,3 @@ export default function Articles({ articles }) {
     </div>
   );
 }
-
-
-
-// const Articles = ({articles}) => {
-//   return (
-//     <div className='news-feed'>
-//       <h1>News Feed</h1>
-//       <div className='articles'>
-//         {articles && articles.map((article, index) => (
-//           <div key={index} className='article'>
-//             <h2>{article.title}</h2>
-//             <p>{article.body}</p>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Articles;
