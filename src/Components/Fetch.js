@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import LinearProgress from "@mui/joy/LinearProgress";
 import Feed from './Feed'
 import Error from './Error'
 
@@ -26,11 +27,13 @@ const Fetch = ( {error}) => {
 
   return (
     <div>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
+      {!isLoading ? (
         <Feed articles={articles} photos={photos} />
-      )}
+      ) :
+      <div>
+        <h1>Loading Data...</h1>
+        <LinearProgress />
+      </div>}
     </div>
   )
 }
