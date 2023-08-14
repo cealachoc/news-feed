@@ -6,13 +6,26 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 
-export default function Feed({ articles, photos }) {
+export default function Feed({ articles, photos, comments, setArticles }) {
   const cardsPerRow = 3;
 
   const rows = [];
   for (let i = 0; i < articles.length; i += cardsPerRow) {
     const row = articles.slice(i, i + cardsPerRow);
     rows.push(row);
+  }
+
+  const handleToggleComments = (articleIndex) => {
+    const updatedArticles = articles.map((article, index) => {
+      if (index === articleIndex) {
+        return {
+          ...article,
+          showComments: !article.showComments
+        };
+      }
+      return article;
+    });
+    setArticles(updatedArticles);
   }
 
     return (
@@ -37,6 +50,7 @@ export default function Feed({ articles, photos }) {
         >
           {row.map((article, columnIndex) => {
             const photo = photos[columnIndex];
+            const articleComments = comments.filter(comment => comment.postId === article.id);
             return (
             <Card
               key={columnIndex}
@@ -59,10 +73,20 @@ export default function Feed({ articles, photos }) {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button size="small" color="primary">
-                  View Comments
+                <Button size="small" color="primary" onClick={() => handleToggleComments(columnIndex)}>
+                  {article.showComments ? 'Hide Comments' : 'View Comments'}
                 </Button>
               </CardActions>
+              {article.showComments && (
+                <CardContent>
+              {articleComments.map(comment => (
+                <div key={comment.id}>
+                  <h3>Comment by {comment.name}</h3>
+                  <p>{comment.body}</p>
+                </div>
+              ))}
+              </CardContent>
+            )}
             </Card>
 )})}
         </div>

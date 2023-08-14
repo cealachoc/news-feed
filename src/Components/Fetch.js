@@ -7,16 +7,23 @@ const Fetch = ( {error}) => {
 
   const [articles, setArticles] = useState([]);
   const [photos, setPhotos] = useState([]);
+  const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     Promise.all([
       fetch('https://jsonplaceholder.typicode.com/posts').then(response => response.json()),
-      fetch('https://jsonplaceholder.typicode.com/photos').then(response => response.json())
+      fetch('https://jsonplaceholder.typicode.com/photos').then(response => response.json()),
+      fetch('https://jsonplaceholder.typicode.com/comments').then(response => response.json())
     ])
-    .then(([articlesData, photosData]) => {
+    .then(([articlesData, photosData, commentsData]) => {
+      const articlesWithComments = articlesData.map(article => ({
+        ...article,
+        showComments: false
+      }));
       setArticles(articlesData);
       setPhotos(photosData);
+      setComments(commentsData);
       setIsLoading(false);
     })
     .catch(error => {
@@ -28,7 +35,7 @@ const Fetch = ( {error}) => {
   return (
     <div>
       {!isLoading ? (
-        <Feed articles={articles} photos={photos} />
+        <Feed articles={articles} photos={photos} comments={comments} setArticles={setArticles}/>
       ) :
       <div>
         <h1>Loading Data...</h1>
