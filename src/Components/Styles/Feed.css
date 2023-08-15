@@ -42,16 +42,7 @@ p {
 
 @media (max-width: 768px) {
   .news-feed {
+    max-width: 100%;
     padding: 10px;
-  }
-
-  .articles {
-    flex-direction: column;
-    align-items: flex-start;
-    height: auto;
-  }
-
-  .article {
-    margin-bottom: 15px;
   }
 }
