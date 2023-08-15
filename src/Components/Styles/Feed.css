@@ -39,3 +39,19 @@ p {
   font-size: 16px;
   margin-bottom: 15px;
 }
+
+@media (max-width: 768px) {
+  .news-feed {
+    padding: 10px;
+  }
+
+  .articles {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .article {
+    margin-bottom: 15px;
+  }
+}
