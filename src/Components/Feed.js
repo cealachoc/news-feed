@@ -1,18 +1,14 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Styles/Feed.css';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
 import CircularProgress from '@mui/joy/CircularProgress';
+import Articles from './Articles';
 
 export default function Feed({ articles, photos, comments, setArticles }) {
   const articlesPerPage = 10;
-  const [visibleArticles, setVisibleArticles] = React.useState(articles.slice(0, articlesPerPage));
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [visibleArticles, setVisibleArticles] = useState(articles.slice(0, articlesPerPage));
+  const [isLoading, setIsLoading] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setVisibleArticles(articles.slice(0, articlesPerPage));
   }, [articles]);
 
@@ -42,7 +38,7 @@ export default function Feed({ articles, photos, comments, setArticles }) {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -60,56 +56,16 @@ export default function Feed({ articles, photos, comments, setArticles }) {
       }}
     >
       <h1>News feed</h1>
-      {visibleArticles.map((article, index) => (
-        <div
-          key={index}
-          style={{
-            marginBottom: '20px',
-          }}
-        >
-          <Card
-            sx={{ maxWidth: 300, width: '100%' }}
-          >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                image={photos[index].url}
-                alt="Article Photo"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {article.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {article.body}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-              <Button size="small" color="primary" onClick={() => handleToggleComments(index)}>
-                {article.showComments ? 'Hide Comments' : 'View Comments'}
-              </Button>
-            </CardActions>
-            {article.showComments && (
-              <CardContent>
-                {comments
-                  .filter(comment => comment.postId === article.id)
-                  .map(comment => (
-                    <div key={comment.id}>
-                      <h3>Comment by {comment.name}</h3>
-                      <p>{comment.body}</p>
-                    </div>
-                  ))}
-              </CardContent>
-            )}
-          </Card>
-        </div>
-      ))}
+      <Articles
+        articles={visibleArticles}
+        photos={photos}
+        comments={comments}
+        handleToggleComments={handleToggleComments}
+      />
 
       {isLoading && (
-        <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}} >
-          <CircularProgress variant='soft' color='neutral'/>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+          <CircularProgress variant="soft" color="neutral" />
         </div>
       )}
     </div>
