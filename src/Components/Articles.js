@@ -4,6 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import ArrowUpward from '@mui/icons-material/ArrowUpward';
+import ArrowDownward from '@mui/icons-material/ArrowDownward';
 
 export default function Articles({ articles, photos, handleToggleComments }) {
   const [comments, setComments] = useState([]);
@@ -16,12 +18,18 @@ export default function Articles({ articles, photos, handleToggleComments }) {
   };
 
   return (
-    <>
+    <div style={{display: 'flex', flexWrap: 'wrap'}}>
       {articles.map((article, index) => (
-        <div key={index} style={{ marginBottom: '20px' }}>
-          <Card sx={{ maxWidth: 300, width: '100%' }}>
+        <div key={index} style={{ marginBottom: '20px', width: '80%', maxWidth: '100%' }}>
+          <Card
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              margin: '0 10px 20px',
+            }}
+            >
             <CardActionArea>
-              <CardMedia component="img" height="140" image={photos[index].url} alt="Article Photo" />
+              <CardMedia component="img" height="400" image={photos[index].url} alt="Article Photo" />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {article.title}
@@ -32,15 +40,25 @@ export default function Articles({ articles, photos, handleToggleComments }) {
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <Button size="small" color="primary"
-              onClick={() => {handleToggleComments(index);
-              fetchComments();
-              }}>
-                {article.showComments ? 'Hide Comments' : 'View Comments'}
+              <Button
+                size="small"
+                color="primary"
+                onClick={() => {
+                  handleToggleComments(index);
+                  fetchComments();
+              }}
+            >
+              {article.showComments ? <ArrowUpward /> : <ArrowDownward />}
+              {article.showComments ? 'Hide Comments' : 'View Comments'}
               </Button>
             </CardActions>
             {article.showComments && (
-              <CardContent>
+              <CardContent
+                sx={{
+                  maxHeight: '200px',
+                  overflowY: 'auto'
+                }}
+              >
                 {comments
                   .filter(comment => comment.postId === article.id)
                   .map(comment => (
@@ -54,6 +72,7 @@ export default function Articles({ articles, photos, handleToggleComments }) {
           </Card>
         </div>
       ))}
-    </>
+    <div/>
+  </div>
   );
 }
