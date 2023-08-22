@@ -13,7 +13,6 @@ const Fetch = ( {error}) => {
   useEffect(() => {
     Promise.all([
       fetch('https://jsonplaceholder.typicode.com/posts').then(response => response.json()),
-      //fetch('https://jsonplaceholder.typicode.com/photos').then(response => response.json()),
       fetch('https://jsonplaceholder.typicode.com/comments').then(response => response.json()),
       fetch('https://picsum.photos/v2/list').then(response => response.json())
     ])

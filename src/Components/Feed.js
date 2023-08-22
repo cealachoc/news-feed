@@ -43,14 +43,14 @@ export default function Feed({ articles, photos, comments, setArticles }) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [visibleArticles]);
+  });
 
   return (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        justifyContent: 'center',
         minHeight: '100vh',
         padding: '20px',
       }}
