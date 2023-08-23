@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import Fetch from './Components/Fetch';
-import Sidebar from './Components/Sidebar';
 
 const App = () => {
 
