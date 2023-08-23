@@ -40,14 +40,6 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
-
 export default function Sidebar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -120,7 +112,7 @@ export default function Sidebar() {
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+        sx={{ flexGrow: 1, bgcolor: 'background.default'}}
       >
         <Toolbar />
       </Box>

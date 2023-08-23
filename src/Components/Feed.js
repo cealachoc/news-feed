@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Styles/Feed.css';
 import CircularProgress from '@mui/joy/CircularProgress';
 import Articles from './Articles';
+import Sidebar from './Sidebar';
 
 export default function Feed({ articles, photos, comments, setArticles }) {
   const articlesPerPage = 10;
@@ -52,9 +53,9 @@ export default function Feed({ articles, photos, comments, setArticles }) {
         flexDirection: 'column',
         justifyContent: 'center',
         minHeight: '100vh',
-        padding: '20px',
       }}
     >
+      <Sidebar />
       <h1>News feed</h1>
       <Articles
         articles={visibleArticles}
@@ -62,7 +63,6 @@ export default function Feed({ articles, photos, comments, setArticles }) {
         comments={comments}
         handleToggleComments={handleToggleComments}
       />
-
       {isLoading && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
           <CircularProgress variant="soft" color="neutral" />
