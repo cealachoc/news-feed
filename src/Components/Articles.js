@@ -1,17 +1,8 @@
 import React from 'react';
 import Article from './Article';
 
-export default function Articles({ articles, photos}) {
+export default function Articles({ articles, photos, fetchComments}) {
 
-  const fetchComments = async (postId) => {
-    try {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      throw error;
-    }
-  };
 
   return (
     <div style={{

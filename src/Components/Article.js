@@ -7,9 +7,16 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 import ArrowUpward from '@mui/icons-material/ArrowUpward';
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
 
-const Article = ({ article, photo, fetchComments }) => {
+const Article = ({ article, photo }) => {
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
+
+  const fetchComments = () => {
+    fetch(`https://jsonplaceholder.typicode.com/comments?postId=${article.id}`)
+      .then(response => response.json())
+      .then(data => setComments(data))
+      .catch(error => console.error('Error fetching comments:', error))
+  }
 
   const toggleShowComments = () => {
     if (!showComments) {
@@ -21,7 +28,7 @@ const Article = ({ article, photo, fetchComments }) => {
   };
 
   return (
-    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+    <div style={{marginBottom: '20px', width: '80%', maxWidth: '100%'}}>
       <Card
         sx={{
           display: 'flex',
