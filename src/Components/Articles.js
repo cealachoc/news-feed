@@ -18,7 +18,7 @@ export default function Articles({ articles, photos, handleToggleComments }) {
   };
 
   return (
-    <div style={{display: 'flex', flexWrap: 'wrap'}}>
+    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
       {articles.map((article, index) => (
         <div key={index} style={{ marginBottom: '20px', width: '80%', maxWidth: '100%' }}>
           <Card
