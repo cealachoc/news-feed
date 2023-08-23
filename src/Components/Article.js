@@ -20,9 +20,7 @@ const Article = ({ article, photo }) => {
 
   const toggleShowComments = () => {
     if (!showComments) {
-      fetchComments(article.id)
-        .then(data => setComments(data))
-        .catch(error => console.error('Error fetching comments', error))
+      fetchComments()
     }
     setShowComments(!showComments)
   };
