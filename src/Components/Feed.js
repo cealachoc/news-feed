@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Styles/Feed.css';
 import CircularProgress from '@mui/joy/CircularProgress';
-import Articles from './Articles';
+import Article from './Article';
 import Sidebar from './Sidebar';
+import './Styles/DarkMode.css'
 
 export default function Feed({ articles, photos, comments, setArticles }) {
   const articlesPerPage = 10;
@@ -12,19 +13,6 @@ export default function Feed({ articles, photos, comments, setArticles }) {
   useEffect(() => {
     setVisibleArticles(articles.slice(0, articlesPerPage));
   }, [articles]);
-
-  const handleToggleComments = (articleIndex) => {
-    const updatedArticles = articles.map((article, index) => {
-      if (index === articleIndex) {
-        return {
-          ...article,
-          showComments: !article.showComments
-        };
-      }
-      return article;
-    });
-    setArticles(updatedArticles);
-  };
 
   const handleScroll = () => {
     const windowHeight = window.innerHeight;
@@ -47,27 +35,28 @@ export default function Feed({ articles, photos, comments, setArticles }) {
   });
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        minHeight: '100vh',
-      }}
-    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          minHeight: '100vh',
+        }}
+      >
       <Sidebar />
       <h1>News feed</h1>
-      <Articles
-        articles={visibleArticles}
-        photos={photos}
-        comments={comments}
-        handleToggleComments={handleToggleComments}
-      />
+      {articles.map((article, index) => (
+        <Article
+          key={index}
+          article={article}
+          photo={photos[index]}
+        />
+      ))}
       {isLoading && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
           <CircularProgress variant="soft" color="neutral" />
         </div>
       )}
-    </div>
+      </div>
   );
 }
